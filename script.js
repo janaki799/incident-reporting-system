@@ -143,3 +143,10 @@ document.getElementById('incidentForm').addEventListener('submit', function (eve
 
 // Event listener to update incident types when the category changes
 document.getElementById('incidentCategory').addEventListener('change', populateIncidentTypes);
+
+    // Notify the user
+    alert('Your incident report has been submitted successfully!');
+});
+
+// Event listener to update incident types when the category changes
+document.getElementById('incidentCategory').addEventListener('change', populateIncidentTypes);

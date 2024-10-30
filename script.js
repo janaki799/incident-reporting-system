@@ -112,10 +112,37 @@ document.getElementById('incidentForm').addEventListener('submit', function (eve
     // For demonstration, log the report object to the console
     console.log(report);
 
-    // TODO: Send the report to the backend (using fetch or similar)
+
+    fetch("https://maker.ifttt.com/trigger/form_submitted/json/with/key/gWTj2JlC9uzHyyeAnPeyIfUt9dxZelZy5JeJXc4Gzi9",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json/json"
+            },
+            body: JSON.stringify(report)
+        })
+        .then(response =>{
+            if(response.ok){
+                console.log("Notification sent successfully!");
+            }
+            else {
+                console.error("Failed to send notification:", response.status);
+            }
+        })
+        .catch(error =>{
+            console.error("Error", error);
+        });
+
 
     // Reset the form after submission
     document.getElementById('incidentForm').reset();
+
+    // Notify the user
+    alert('Your incident report has been submitted successfully!');
+});
+
+// Event listener to update incident types when the category changes
+document.getElementById('incidentCategory').addEventListener('change', populateIncidentTypes);
 
     // Notify the user
     alert('Your incident report has been submitted successfully!');

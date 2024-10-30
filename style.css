@@ -3,13 +3,10 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-image: linear-gradient(pink,purple);
+    background-image: linear-gradient(pink, purple);
     background-size: cover;
     background-position: center;
 }
-
-    
-
 
 .container {
     display: flex;
@@ -21,31 +18,7 @@ body {
 h1, h2 {
     color: #151111; /* Header color */
     text-align: center;
-}
-
-input, select, textarea {
-    width: 100%;
-    max-width: 400px;
-    padding: 10px;
-    margin: 10px 0;
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-/* Button styles */
-button {
-    background-color: #28a745; /* Green button */
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #218838; /* Darker green on hover */
+    margin-bottom: 20px; /* Add margin below headers */
 }
 
 /* Form Container */
@@ -53,11 +26,13 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: linear-gradient(rgb(87, 4, 87),rgb(243, 68, 97));
+    background-image: linear-gradient(rgb(87, 4, 87), rgb(243, 68, 97));
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     animation: fadeIn 0.5s; /* Fade-in animation */
+    width: 100%; /* Full width */
+    max-width: 500px; /* Limit max width for the form */
 }
 
 /* Animation for form display */
@@ -70,9 +45,42 @@ button:hover {
     }
 }
 
-/* Style for select dropdown */
-select {
-    background-color: #f8f9fa; /* Light background for dropdown */
+label {
+    margin: 10px 0 5px; /* Space between label and input */
+    font-weight: bold; /* Make labels bold */
+    color: #333; /* Darker color for labels */
+}
+
+input, select, textarea {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s; /* Smooth transition for border color */
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #28a745; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Button styles */
+button {
+    background-color: #28a745; /* Green button */
+    color: white;
+    padding: 10px 20px; /* Added padding for button */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px; /* Font size for button */
+}
+
+button:hover {
+    background-color: #218838; /* Darker green on hover */
 }
 
 /* Textarea style */
@@ -80,6 +88,18 @@ textarea {
     resize: none; /* Disable resizing */
     height: 100px; /* Set a fixed height */
 }
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    .form-container {
+        width: 90%; /* Adjust form container width for smaller screens */
+    }
+
+    input, select, textarea {
+        max-width: 100%; /* Allow full width on smaller screens */
+    }
+}
+
 
 /* Responsive styles */
 @media (max-width: 600px) {

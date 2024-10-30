@@ -1,9 +1,12 @@
 // Function to handle the submission of the college code
 function submitCode() {
     const collegeCodeInput = document.getElementById('collegeCode').value;
+   console.log('Entered Code:',
+               collegeCodeInput);
 
     // Check if the college code is valid
     if (collegeCodeInput.toUpperCase() === '8P') {
+        console.log('Redirecting to report page...');
         // Redirect to the reporting form page
         window.location.href = 'report.html';
     } else {

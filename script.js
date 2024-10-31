@@ -80,10 +80,10 @@ document.addEventListener('DOMContentLoaded',()=>{
                 incidentCategory: incidentCategory, // Correct key
                 incidentType: incidentType,         // Correct key
                 description: description,
-                date: date
+                date: date || new Date().toISOString()
             };
         
-            console.log(report);
+            console.log('Report object:', report);
         
             // Send the report to the backend
             fetch('http://localhost:3000/reports', {
@@ -91,17 +91,22 @@ document.addEventListener('DOMContentLoaded',()=>{
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(report),
+                body: JSON.stringify(report)
             })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.text();
+                console.log('Raw response:', response);
+               
+                    return response.text().then(text =>{
+                        console.log('Response body:',text);
+                        if (!response.ok) {
+                        throw new Error(`Network response was not ok: ${text}`);
+                    }
+                return JSON.parse(text);
+            });
             })
             .then(data => {
-                console.log(data);
-                document.getElementById('incidentForm').reset(); // Correct form ID
+                console.log('Parsed response:',data);
+                document.getElementById('incidentForm').reset();// Correct form ID
                 alert('Your incident report has been submitted successfully!'); // Alert message
             })
             .catch(error => {

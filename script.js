@@ -42,10 +42,18 @@ function populateIncidentTypes() {
     // Populate the incident type dropdown
     types.forEach(type => {
         const option = document.createElement('option');
-        option.value = type.toupperCase().replace(/\s+/g, '_'); // Use a URL-friendly value
+        option.value = type.toUpperCase().replace(/\s+/g, '_'); // Use a URL-friendly value
         option.textContent = type;
         typeSelect.appendChild(option);
     });
+
+    if (types.length===0){
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.textContent = 'Select Type';
+
+        typeSelect.appendChild(defaultOption);
+    }
 }
 
 // Function to handle the incident report form submission

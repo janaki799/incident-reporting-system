@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enter College Code</title>
     <link rel="stylesheet" href="style.css">
-    <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="form-container">
             <h1>Enter College Code</h1>
-            <form onsubmit="submitCode();
-                return false;">
             <input type="text" id="collegeCode" placeholder="Enter College Code" maxlength="2">
             <button onclick="submitCode()">Submit</button>
         </div>

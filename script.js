@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             const date = document.getElementById('date').value;
         
             // Display notification sound (ensure you have a sound file)
-            const notificationSound = new Audio('C:\\Users\\Ravi varma\\Downloads\\alert-sound-230091.mp3'); // Correct path format
+            const notificationSound = new Audio('notification.mp3'); // Correct path format
             notificationSound.play();
         
             // Create a report object to send to the backend

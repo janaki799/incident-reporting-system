@@ -56,55 +56,64 @@ function populateIncidentTypes() {
     }
 }
 
-// Function to handle the incident report form submission
-document.getElementById('incidentForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevent the default form submission
+document.addEventListener('DOMContentLoaded',()=>{
+    const incidentForm = document.getElementById('incidentForm');
+    const incidentCategory = document.getElementById('incidentCategory');
+    
+    if (incidentForm) {
 
-    // Gather form data
-    const incidentCategory = document.getElementById('incidentCategory').value;
-    const incidentType = document.getElementById('incidentType').value;
-    const description = document.getElementById('description').value;
-    const date = document.getElementById('date').value;
-
-    // Display notification sound (ensure you have a sound file)
-    const notificationSound = new Audio('C:\\Users\\Ravi varma\\Downloads\\alert-sound-230091.mp3'); // Correct path format
-    notificationSound.play();
-
-    // Create a report object to send to the backend
-    const report = {
-        collegeCode: '8P',
-        incidentCategory: incidentCategory, // Correct key
-        incidentType: incidentType,         // Correct key
-        description: description,
-        date: date
-    };
-
-    console.log(report);
-
-    // Send the report to the backend
-    fetch('http://localhost:3000/reports', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(report),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.text();
-    })
-    .then(data => {
-        console.log(data);
-        document.getElementById('incidentForm').reset(); // Correct form ID
-        alert('Your incident report has been submitted successfully!'); // Alert message
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("Failed to submit the report. Please try again.");
+        incidentForm.addEventListener('submit',function(event){
+            event.preventDefault();
+         
+            const incidentCategory = document.getElementById('incidentCategory').value;
+            const incidentType = document.getElementById('incidentType').value;
+            const description = document.getElementById('description').value;
+            const date = document.getElementById('date').value;
+        
+            // Display notification sound (ensure you have a sound file)
+            const notificationSound = new Audio('C:\\Users\\Ravi varma\\Downloads\\alert-sound-230091.mp3'); // Correct path format
+            notificationSound.play();
+        
+            // Create a report object to send to the backend
+            const report = {
+                collegeCode: '8P',
+                incidentCategory: incidentCategory, // Correct key
+                incidentType: incidentType,         // Correct key
+                description: description,
+                date: date
+            };
+        
+            console.log(report);
+        
+            // Send the report to the backend
+            fetch('http://localhost:3000/reports', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(report),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log(data);
+                document.getElementById('incidentForm').reset(); // Correct form ID
+                alert('Your incident report has been submitted successfully!'); // Alert message
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Failed to submit the report. Please try again.");
+        });
     });
-});
+};
+       
+             if (incidentCategory){
 
-// Event listener to update incident types when the category changes
-document.getElementById('incidentCategory').addEventListener('change', populateIncidentTypes);
+                incidentCategory.addEventListener('change',populateIncidentTypes);
+             }
+    });
+

@@ -99,15 +99,3 @@ textarea {
         max-width: 100%; /* Allow full width on smaller screens */
     }
 }
-
-
-/* Responsive styles */
-@media (max-width: 600px) {
-    .form-container {
-        width: 90%; /* Adjust form container width for smaller screens */
-    }
-
-    input, select, textarea {
-        max-width: 100%; /* Allow full width on smaller screens */
-    }
-}

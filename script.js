@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded',()=>{
             console.log('Report object:', report);
         
             // Send the report to the backend
-            fetch('http://localhost:3000/reports', {
+            fetch('https://my-backend-service-h7x8.onrender.com/api/flash', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

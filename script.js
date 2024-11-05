@@ -112,7 +112,6 @@ async function submitReport(formData) {
     try {
         const response = await fetch(`${BACKEND_URL}/reports`, {
             method: 'POST',
-            mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json'
             },

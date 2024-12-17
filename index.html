@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enter College Code</title>
-    <link rel="stylesheet" href="style.css">
+    <title>College Code Entry</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="form-container">
-            <h1>Enter College Code</h1>
-            <input type="text" id="collegeCode" placeholder="Enter College Code" maxlength="2">
-            <button onclick="submitCode()">Submit</button>
-        </div>
+    <div class="container" id="collegeCodeContainer">
+        <h1>Incident Reporting System</h1>
+        <form id="collegeCodeForm">
+            <div class="form-group">
+                <label for="collegeCode">Enter College Code</label>
+                <input type="text" id="collegeCode" name="collegeCode" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
     </div>
     <script src="script.js"></script>
 </body>
-</html>
+</html>                                 

@@ -1,5 +1,5 @@
 // script.js
-const BACKEND_URL = 'https://localhost:3001';
+const BACKEND_URL = 'https://my-backend-service-h7x8.onrender.com';
 const COLLEGE_CODE = '8P';
 
 const toggleSpinner = (show) => {

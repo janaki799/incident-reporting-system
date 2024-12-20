@@ -1,8 +1,7 @@
-// Constants
-const BACKEND_URL = 'http://localhost:3000';
+// script.js
+const BACKEND_URL = 'https://my-backend-service-h7x8.onrender.com';
 const COLLEGE_CODE = '8P';
 
-// Utility function to show/hide spinner
 const toggleSpinner = (show) => {
     const spinner = document.getElementById('loading-spinner');
     if (spinner) {
@@ -10,7 +9,6 @@ const toggleSpinner = (show) => {
     }
 };
 
-// Function to handle the submission of the college code
 function submitCode() {
     const collegeCodeInput = document.getElementById('collegeCode').value;
     console.log('Entered Code:', collegeCodeInput);
@@ -23,15 +21,12 @@ function submitCode() {
     }
 }
 
-// Function to populate incident types based on the selected category
 function populateIncidentTypes() {
     const categorySelect = document.getElementById('incidentCategory');
     const typeSelect = document.getElementById('incidentType');
 
-    // Clear current options
     typeSelect.innerHTML = '';
 
-    // Define incident types mapping
     const incidentTypes = {
         maintenance: [
             "Broken Equipment",
@@ -86,11 +81,9 @@ function populateIncidentTypes() {
         others: []
     };
 
-    // Get selected category and populate types
     const selectedCategory = categorySelect.value;
     const types = incidentTypes[selectedCategory] || [];
 
-    // Add options to select
     types.forEach(type => {
         const option = document.createElement('option');
         option.value = type.toUpperCase().replace(/\s+/g, '_');
@@ -98,7 +91,6 @@ function populateIncidentTypes() {
         typeSelect.appendChild(option);
     });
 
-    // Add default option if no types
     if (types.length === 0) {
         const defaultOption = document.createElement('option');
         defaultOption.value = '';
@@ -107,47 +99,39 @@ function populateIncidentTypes() {
     }
 }
 
-// Function to submit the report
 async function submitReport(formData) {
     try {
         const response = await fetch(`${BACKEND_URL}/reports`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(formData),
+            credentials: 'include'
         });
 
-        const data = await response.json();
-
         if (!response.ok) {
-            throw new Error(data.error || 'Failed to submit report');
+            const errorData = await response.json();
+            throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
         }
 
-        return data;
+        return await response.json();
     } catch (error) {
         console.error('Error submitting report:', error);
-        throw error;
+        throw new Error(error.message || 'Failed to submit report');
     }
 }
 
-// Event listener for DOM content load
 document.addEventListener('DOMContentLoaded', () => {
     const incidentForm = document.getElementById('incidentForm');
     const incidentCategory = document.getElementById('incidentCategory');
 
-    // Add form submit handler
     if (incidentForm) {
         incidentForm.addEventListener('submit', async function(event) {
             event.preventDefault();
             toggleSpinner(true);
 
             try {
-                // Remove notification sound
-                // const notificationSound = new Audio('notification.mp3');
-                // await notificationSound.play();
-
-                // Gather form data
                 const formData = {
                     collegeCode: COLLEGE_CODE,
                     incidentCategory: document.getElementById('incidentCategory').value,
@@ -156,11 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     date: document.getElementById('date').value || new Date().toISOString()
                 };
 
-                // Submit report
                 const response = await submitReport(formData);
                 console.log('Report submitted successfully:', response);
 
-                // Reset form and show success message
                 incidentForm.reset();
                 alert('Your incident report has been submitted successfully!');
             } catch (error) {
@@ -172,11 +154,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Add category change handler
     if (incidentCategory) {
         incidentCategory.addEventListener('change', populateIncidentTypes);
     }
 });
+
+
+
+
 
 
 

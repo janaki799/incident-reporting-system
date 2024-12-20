@@ -1,8 +1,7 @@
-// Constants
-const BACKEND_URL = 'https://my-backend-service-h7x8.onrender.com';
+// script.js
+const BACKEND_URL = 'https://localhost:3001';
 const COLLEGE_CODE = '8P';
 
-// Utility function to show/hide spinner
 const toggleSpinner = (show) => {
     const spinner = document.getElementById('loading-spinner');
     if (spinner) {
@@ -10,72 +9,88 @@ const toggleSpinner = (show) => {
     }
 };
 
-// Function to handle the submission of the college code
 function submitCode() {
-    const collegeCodeInput = document.getElementById('collegeCode').value.trim();
+    const collegeCodeInput = document.getElementById('collegeCode').value;
     console.log('Entered Code:', collegeCodeInput);
 
     if (collegeCodeInput.toUpperCase() === COLLEGE_CODE) {
         console.log('Redirecting to report page...');
-        localStorage.setItem('collegeCode', collegeCodeInput.toUpperCase());
         window.location.href = 'report.html';
     } else {
         alert('Invalid college code. Please try again.');
     }
 }
 
-// Function to populate incident types based on the selected category
 function populateIncidentTypes() {
     const categorySelect = document.getElementById('incidentCategory');
     const typeSelect = document.getElementById('incidentType');
 
-    // Clear current options
     typeSelect.innerHTML = '';
 
-    // Define incident types mapping
     const incidentTypes = {
         maintenance: [
-            "Broken Equipment", "Plumbing Issues", "Electrical Problems", "Damaged Furniture", "Elevator Malfunction",
-            "HVAC Issues", "Building Damages"
+            "Broken Equipment",
+            "Plumbing Issues",
+            "Electrical Problems",
+            "Damaged Furniture",
+            "Elevator Malfunction",
+            "HVAC Issues",
+            "Building Damages"
         ],
         safety: [
-            "Fire Hazards", "Theft", "Vandalism", "Unauthorized Access", "Physical Hazards", "Suspicious Behavior",
+            "Fire Hazards",
+            "Theft",
+            "Vandalism",
+            "Unauthorized Access",
+            "Physical Hazards",
+            "Suspicious Behavior",
             "Medical Emergencies"
         ],
         academic: [
-            "Cheating or Plagiarism", "Harassment by Faculty or Staff", "Unfair Grading", "Inappropriate Classroom Behavior"
+            "Cheating or Plagiarism",
+            "Harassment by Faculty or Staff",
+            "Unfair Grading",
+            "Inappropriate Classroom Behavior"
         ],
         health: [
-            "Unsanitary Conditions", "Food Safety", "COVID-19 or Other Infectious Diseases", "First Aid Issues"
+            "Unsanitary Conditions",
+            "Food Safety",
+            "COVID-19 or Other Infectious Diseases",
+            "First Aid Issues"
         ],
         bullying: [
-            "Bullying", "Sexual Harassment", "Cyber Bullying"
+            "Bullying",
+            "Sexual Harassment",
+            "Cyber Bullying"
         ],
         environment: [
-            "Pollution", "Noise Pollution", "Energy Wastage"
+            "Pollution",
+            "Noise Pollution",
+            "Energy Wastage"
         ],
         transport: [
-            "Parking Issues", "Transportation Delays", "Accidents"
+            "Parking Issues",
+            "Transportation Delays",
+            "Accidents"
         ],
         it: [
-            "Network Issues", "Software Problems", "Access Issues"
+            "Network Issues",
+            "Software Problems",
+            "Access Issues"
         ],
-        others: ["Other"]
+        others: []
     };
 
-    // Get selected category and populate types
     const selectedCategory = categorySelect.value;
     const types = incidentTypes[selectedCategory] || [];
 
-    // Add options to select
     types.forEach(type => {
         const option = document.createElement('option');
-        option.value = type;
+        option.value = type.toUpperCase().replace(/\s+/g, '_');
         option.textContent = type;
         typeSelect.appendChild(option);
     });
 
-    // Add default option if no types
     if (types.length === 0) {
         const defaultOption = document.createElement('option');
         defaultOption.value = '';
@@ -84,98 +99,63 @@ function populateIncidentTypes() {
     }
 }
 
-// Function to submit the report using FormData
 async function submitReport(formData) {
     try {
-        // Log all form data (including the image and text fields) before sending
-        for (let [key, value] of formData.entries()) {
-            console.log(key, value);
-        }
-
         const response = await fetch(`${BACKEND_URL}/reports`, {
             method: 'POST',
-            body: formData, // The FormData includes both text fields and the image file
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+            credentials: 'include'
         });
 
-        // Check for server errors
         if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.error || 'Failed to submit report');
+            throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
         }
 
-        // Parse response
-        const data = await response.json();
-        return data;
+        return await response.json();
     } catch (error) {
         console.error('Error submitting report:', error);
-        throw error;
+        throw new Error(error.message || 'Failed to submit report');
     }
 }
 
-// Event listener for DOM content load
 document.addEventListener('DOMContentLoaded', () => {
-    const collegeCodeForm = document.getElementById('collegeCodeForm');
-    const incidentCategorySelect = document.getElementById('incidentCategory');
-    document.addEventListener('DOMContentLoaded', () => {
-        const container = document.querySelector('.container');
-        container.classList.add('flip-animation');
-    });
+    const incidentForm = document.getElementById('incidentForm');
+    const incidentCategory = document.getElementById('incidentCategory');
 
-    // Handle college code submission
-    if (collegeCodeForm) {
-        collegeCodeForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            submitCode();
-        });
-    }
+    if (incidentForm) {
+        incidentForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            toggleSpinner(true);
 
-    // Handle category selection and populate types
-    if (incidentCategorySelect) {
-        incidentCategorySelect.addEventListener('change', populateIncidentTypes);
-        populateIncidentTypes(); // Populate on load
-    }
-
-    // Handle report form submission
-    const reportForm = document.getElementById('reportForm');
-    if (reportForm) {
-        reportForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
             try {
-                toggleSpinner(true);
+                const formData = {
+                    collegeCode: COLLEGE_CODE,
+                    incidentCategory: document.getElementById('incidentCategory').value,
+                    incidentType: document.getElementById('incidentType').value,
+                    description: document.getElementById('description').value,
+                    date: document.getElementById('date').value || new Date().toISOString()
+                };
 
-                // Collect form data as FormData
-                const formData = new FormData(reportForm);
+                const response = await submitReport(formData);
+                console.log('Report submitted successfully:', response);
 
-                // Append additional fields like collegeCode and timestamp
-                const collegeCode = localStorage.getItem('collegeCode');
-                if (!collegeCode) {
-                    throw new Error('College code not found');
-                }
-                formData.append('collegeCode', collegeCode);
-                formData.append('timestamp', new Date().toISOString());
-
-                // If an image is selected, it will be automatically included in FormData
-                const imageFile = document.getElementById('image').files[0];
-                if (imageFile) {
-                    formData.append('image', imageFile); // The key should match your backend field name
-                }
-
-                // Submit the report as FormData
-                const result = await submitReport(formData);
-
-                // Notify the user with the returned data
-                alert(`New Report Details:\n\nID: ${result.id}\nCollege Code: ${result.collegeCode}\nCategory: ${result.incidentCategory}\nType: ${result.incidentType}\nDescription: ${result.description}\nDate: ${new Date(result.timestamp).toLocaleString()}\nEnvironment: production`);
-
-                // Reset the form and repopulate incident types
-                reportForm.reset();
-                populateIncidentTypes(); // Repopulate the categories if needed
+                incidentForm.reset();
+                alert('Your incident report has been submitted successfully!');
             } catch (error) {
                 console.error('Error:', error);
-                alert(`Failed to submit report: ${error.message}`);
+                alert('Failed to submit the report. Please try again.');
             } finally {
                 toggleSpinner(false);
             }
         });
+    }
+
+    if (incidentCategory) {
+        incidentCategory.addEventListener('change', populateIncidentTypes);
     }
 });
 

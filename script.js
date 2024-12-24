@@ -132,13 +132,13 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleSpinner(true);
 
             try {
-                const formData = {
-                    collegeCode: COLLEGE_CODE,
-                    incidentCategory: document.getElementById('incidentCategory').value,
-                    incidentType: document.getElementById('incidentType').value,
-                    description: document.getElementById('description').value,
-                    date: document.getElementById('date').value || new Date().toISOString()
-                };
+           const formData = {
+    collegeCode: COLLEGE_CODE,
+    incidentCategory: document.getElementById('incidentCategory').value,
+    incidentType: document.getElementById('incidentType').value,
+    description: document.getElementById('description').value,
+    date: new Date().toISOString()  // This will capture the exact moment of submission
+};
 
                 const response = await submitReport(formData);
                 console.log('Report submitted successfully:', response);

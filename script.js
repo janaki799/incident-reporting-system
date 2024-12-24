@@ -1,4 +1,3 @@
-// script.js
 const BACKEND_URL = 'https://my-backend-service-h7x8.onrender.com';
 const COLLEGE_CODE = '8P';
 
@@ -29,54 +28,31 @@ function populateIncidentTypes() {
 
     const incidentTypes = {
         maintenance: [
-            "Broken Equipment",
-            "Plumbing Issues",
-            "Electrical Problems",
-            "Damaged Furniture",
-            "Elevator Malfunction",
-            "HVAC Issues",
-            "Building Damages"
+            "Broken Equipment", "Plumbing Issues", "Electrical Problems", "Damaged Furniture",
+            "Elevator Malfunction", "HVAC Issues", "Building Damages"
         ],
         safety: [
-            "Fire Hazards",
-            "Theft",
-            "Vandalism",
-            "Unauthorized Access",
-            "Physical Hazards",
-            "Suspicious Behavior",
-            "Medical Emergencies"
+            "Fire Hazards", "Theft", "Vandalism", "Unauthorized Access", "Physical Hazards",
+            "Suspicious Behavior", "Medical Emergencies"
         ],
         academic: [
-            "Cheating or Plagiarism",
-            "Harassment by Faculty or Staff",
-            "Unfair Grading",
+            "Cheating or Plagiarism", "Harassment by Faculty or Staff", "Unfair Grading",
             "Inappropriate Classroom Behavior"
         ],
         health: [
-            "Unsanitary Conditions",
-            "Food Safety",
-            "COVID-19 or Other Infectious Diseases",
-            "First Aid Issues"
+            "Unsanitary Conditions", "Food Safety", "COVID-19 or Other Infectious Diseases", "First Aid Issues"
         ],
         bullying: [
-            "Bullying",
-            "Sexual Harassment",
-            "Cyber Bullying"
+            "Bullying", "Sexual Harassment", "Cyber Bullying"
         ],
         environment: [
-            "Pollution",
-            "Noise Pollution",
-            "Energy Wastage"
+            "Pollution", "Noise Pollution", "Energy Wastage"
         ],
         transport: [
-            "Parking Issues",
-            "Transportation Delays",
-            "Accidents"
+            "Parking Issues", "Transportation Delays", "Accidents"
         ],
         it: [
-            "Network Issues",
-            "Software Problems",
-            "Access Issues"
+            "Network Issues", "Software Problems", "Access Issues"
         ],
         others: []
     };
@@ -111,7 +87,9 @@ async function submitReport(formData) {
         });
 
         if (!response.ok) {
+            // Log detailed error response
             const errorData = await response.json();
+            console.error('Backend error:', errorData);
             throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
         }
 
@@ -127,18 +105,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const incidentCategory = document.getElementById('incidentCategory');
 
     if (incidentForm) {
-        incidentForm.addEventListener('submit', async function(event) {
+        incidentForm.addEventListener('submit', async function (event) {
             event.preventDefault();
             toggleSpinner(true);
 
             try {
-           const formData = {
-    collegeCode: COLLEGE_CODE,
-    incidentCategory: document.getElementById('incidentCategory').value,
-    incidentType: document.getElementById('incidentType').value,
-    description: document.getElementById('description').value,
-    date: new Date().toISOString()  // This will capture the exact moment of submission
-};
+                const formData = {
+                    collegeCode: COLLEGE_CODE,
+                    incidentCategory: document.getElementById('incidentCategory').value,
+                    incidentType: document.getElementById('incidentType').value,
+                    description: document.getElementById('description').value,
+                    date: new Date().toISOString()  // This will capture the exact moment of submission
+                };
+
+                // Validate form data before submission
+                if (!formData.incidentCategory || !formData.incidentType || !formData.description) {
+                    throw new Error('Please fill out all required fields.');
+                }
 
                 const response = await submitReport(formData);
                 console.log('Report submitted successfully:', response);
@@ -158,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         incidentCategory.addEventListener('change', populateIncidentTypes);
     }
 });
+
 
 
 

@@ -142,14 +142,13 @@ textarea:focus {
     color: #333;
 }
 textarea {
-    width: 100%;
-    padding: 10px;
+  resize: none;
+    min-height: 100px;
+    height: auto;
+    padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 1rem;
-    resize: none;  /* Disable manual resizing */
-    min-height: 50px;  /* Set the initial height */
-    overflow: hidden;  /* Hide scrollbar */
 }
 
 /* Optional: Add focus effect */

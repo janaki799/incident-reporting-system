@@ -13,6 +13,7 @@
             <form id="incidentForm">
                 <label for="incidentCategory">Incident Category:</label>
                 <select id="incidentCategory">
+                    <option value=""disable selected>Select Category</option>                  
                     <option value="maintenance">Maintenance Issues</option>
                     <option value="safety">Safety and Security Incidents</option>
                     <option value="academic">Academic Incidents</option>
@@ -26,12 +27,13 @@
                  <br>
                  <br>
                 <label for="incidentType">Incident Type:</label>
-                <select id="incidentType">
+                <select id="incidentType" disabled>
                     <option value="brokenEquipment">Broken Equipment</option>
                     <option value="plumbingIssues">Plumbing Issues</option>
                     <option value="fireHazard">Fire Hazard</option>
                     <option value="cheating">Cheating or Plagiarism</option>
                     <!-- Add more options based on the categories -->
+                    <option value=""disable selected >Select Type</option>
                 </select>
                  <br>
                  <br>
@@ -40,7 +42,7 @@
                  <br>
                  <br>
                 <label for="date">Date:</label>
-                <input type="date" id="date">
+                <input type="date" id="date" required>
                  <br>
                  <br>
                 <button type="submit">Submit Report</button>

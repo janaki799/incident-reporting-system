@@ -1,8 +1,6 @@
-// Constants
 const BACKEND_URL = 'https://my-backend-service-h7x8.onrender.com';
 const COLLEGE_CODE = '8P';
 
-// Utility function to show/hide spinner
 const toggleSpinner = (show) => {
     const spinner = document.getElementById('loading-spinner');
     if (spinner) {
@@ -10,72 +8,184 @@ const toggleSpinner = (show) => {
     }
 };
 
-// Function to handle the submission of the college code
 function submitCode() {
-    const collegeCodeInput = document.getElementById('collegeCode').value.trim();
+    const collegeCodeInput = document.getElementById('collegeCode').value;
     console.log('Entered Code:', collegeCodeInput);
 
     if (collegeCodeInput.toUpperCase() === COLLEGE_CODE) {
         console.log('Redirecting to report page...');
-        localStorage.setItem('collegeCode', collegeCodeInput.toUpperCase());
         window.location.href = 'report.html';
     } else {
         alert('Invalid college code. Please try again.');
     }
 }
 
-// Function to populate incident types based on the selected category
 function populateIncidentTypes() {
     const categorySelect = document.getElementById('incidentCategory');
     const typeSelect = document.getElementById('incidentType');
 
-    // Clear current options
-    typeSelect.innerHTML = '';
-
-    // Define incident types mapping
+    typeSelect.innerHTML = '<option value="" disabled selected>Select Type</option>';
+    typeSelect.disabled = false;
     const incidentTypes = {
         maintenance: [
-            "Broken Equipment", "Plumbing Issues", "Electrical Problems", "Damaged Furniture", "Elevator Malfunction",
-            "HVAC Issues", "Building Damages"
+            "Broken Equipment",
+            "Plumbing Issues",
+            "Electrical Problems",
+            "Damaged Furniture",
+            "Elevator Malfunction",
+            "HVAC Issues",
+            "Building Damages",
+            "Air Conditioning Issues",
+            "Lighting Issues",
+            "Plumbing Blockages",
+            "Fire Alarm Malfunction",
+            "Security System Failure",
+            "Lab Equipment Malfunction",
+            "Electrical Wiring Issues",
+            "Computer Lab Equipment Failure",
+            "Air Conditioning/Heating Issues in Labs",
+            "Faulty Fire Safety Equipment",
+            "Leaky Roof or Windows",
+            "Poor Lighting in Labs"
         ],
         safety: [
-            "Fire Hazards", "Theft", "Vandalism", "Unauthorized Access", "Physical Hazards", "Suspicious Behavior",
-            "Medical Emergencies"
+            "Fire Hazards",
+            "Theft",
+            "Vandalism",
+            "Unauthorized Access",
+            "Physical Hazards",
+            "Suspicious Behavior",
+            "Medical Emergencies",
+            "Slip and Fall Hazards",
+            "Electrical Shocks",
+            "Unsafe Staircases",
+            "Broken Doors or Windows",
+            "Unsafe Lab Equipment",
+            "Chemical Spills",
+            "Electrical Hazards in Labs",
+            "Injury Due to Machine Malfunction",
+            "Unsafe Lab Procedures",
+            "Fall Hazards in Workshops",
+            "Gas Leak",
+            "Personal Protective Equipment (PPE) Shortages",
+            "Lab Equipment Misuse or Accidents",
+            "Broken Safety Equipment"
         ],
         academic: [
-            "Cheating or Plagiarism", "Harassment by Faculty or Staff", "Unfair Grading", "Inappropriate Classroom Behavior"
+            "Cheating or Plagiarism",
+            "Harassment by Faculty or Staff",
+            "Unfair Grading",
+            "Inappropriate Classroom Behavior",
+            "Discrimination by Faculty",
+            "Student Misconduct",
+            "Inadequate Course Materials",
+            "Technical Difficulties in Online Courses",
+            "Unprofessional Behavior by Faculty",
+            "Late Lab Results/Feedback",
+            "Issues with Online Lab Sessions",
+            "Insufficient Practical Knowledge in Courses",
+            "Course Schedule Conflicts",
+            "Incomplete/Incorrect Course Materials",
+            "Lack of Availability of Important Textbooks",
+            "Miscommunication of Course Requirements",
+            "Unclear Lab Instructions",
+            "Unfair Peer Evaluation",
+            "Technical Issues with Online Exams",
+            "Unavailability of Lab Assistants"
         ],
         health: [
-            "Unsanitary Conditions", "Food Safety", "COVID-19 or Other Infectious Diseases", "First Aid Issues"
+            "Unsanitary Conditions",
+            "Food Safety",
+            "COVID-19 or Other Infectious Diseases",
+            "First Aid Issues",
+            "Excessive Stress",
+            "Mental Health Support Issues",
+            "Food Poisoning",
+            "Unhygienic Toilets",
+            "Lack of Emergency Medical Assistance",
+            "Campus Health Campaigns (Lack of)",
+            "Inadequate Medical Facilities"
         ],
         bullying: [
-            "Bullying", "Sexual Harassment", "Cyber Bullying"
+            "Bullying",
+            "Sexual Harassment",
+            "Cyber Bullying",
+            "Ragging",
+            "Bullying in Online Classes",
+            "Faculty Favoritism",
+            "Discrimination in Labs or Workshops",
+            "Gender-Based Harassment",
+            "Peer Pressure in Group Projects",
+            "Harassment in Hostels",
+            "Mental Health Bullying (e.g., stigma around seeking help)"
         ],
         environment: [
-            "Pollution", "Noise Pollution", "Energy Wastage"
+            "Pollution",
+            "Noise Pollution",
+            "Energy Wastage",
+            "Pollution Due to Laboratory Waste",
+            "Noise Pollution from Workshops",
+            "Lack of Recycling in Labs",
+            "Uncontrolled Waste Disposal",
+            "Deforestation Around the Campus",
+            "Electricity Wastage in Labs",
+            "Air Pollution Due to Vehicle Exhaust",
+            "Lack of Green Spaces on Campus",
+            "Inadequate Ventilation in Labs"
         ],
         transport: [
-            "Parking Issues", "Transportation Delays", "Accidents"
+            "Parking Issues",
+            "Transportation Delays",
+            "Accidents",
+            "Unsafe Parking for Vehicles",
+            "Limited Bus Services",
+            "Transportation Delays During Exams",
+            "Cycling and Pedestrian Safety",
+            "Accidents at College Gates",
+            "Breakdowns of Campus Shuttle Service",
+            "Traffic Congestion Around Campus",
+            "Poor Road Conditions on Campus",
+            "Lack of Accessible Transport for Disabled Students"
         ],
         it: [
-            "Network Issues", "Software Problems", "Access Issues"
+            "Network Issues",
+            "Software Problems",
+            "Access Issues",
+            "Slow Internet/Network Connectivity in Labs",
+            "Problems with Online Learning Platforms",
+            "Software Crashes in Lab Computers",
+            "Inadequate Lab Access to Software Tools",
+            "Server Downtime for Lab Servers",
+            "Cyberbullying or Cybersecurity Threats",
+            "Poor Maintenance of College Website",
+            "Technical Issues with Student Portals",
+            "Wi-Fi Connectivity Issues in Campus Buildings"
         ],
-        others: ["Other"]
+        others: [
+            "Complaint About Project Work Allocation",
+            "Lack of Campus Events",
+            "Social Media Misuse (e.g., fake accounts)",
+            "Disciplinary Issues in Hostels",
+            "Issues with Club and Event Management",
+            "Conflict Over Resource Allocation for Projects",
+            "Unfair Distribution of Funding for Projects",
+            "Miscommunication Regarding Event Schedules",
+            "Conflict with Hostel Rules and Regulations",
+            "Complaint About Campus Food Quality",
+            "Conflict Over Group Project Assignments"
+            ]
     };
 
-    // Get selected category and populate types
     const selectedCategory = categorySelect.value;
     const types = incidentTypes[selectedCategory] || [];
 
-    // Add options to select
     types.forEach(type => {
         const option = document.createElement('option');
-        option.value = type;
+        option.value = type.toUpperCase().replace(/\s+/g, '_');
         option.textContent = type;
         typeSelect.appendChild(option);
     });
 
-    // Add default option if no types
     if (types.length === 0) {
         const defaultOption = document.createElement('option');
         defaultOption.value = '';
@@ -84,98 +194,134 @@ function populateIncidentTypes() {
     }
 }
 
-// Function to submit the report using FormData
 async function submitReport(formData) {
     try {
-        // Log all form data (including the image and text fields) before sending
-        for (let [key, value] of formData.entries()) {
-            console.log(key, value);
-        }
-
         const response = await fetch(`${BACKEND_URL}/reports`, {
             method: 'POST',
-            body: formData, // The FormData includes both text fields and the image file
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+            credentials: 'include'
         });
 
-        // Check for server errors
         if (!response.ok) {
+            // Log detailed error response
             const errorData = await response.json();
-            throw new Error(errorData.error || 'Failed to submit report');
+            console.error('Backend error:', errorData);
+            throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
         }
 
-        // Parse response
-        const data = await response.json();
-        return data;
+        return await response.json();
     } catch (error) {
         console.error('Error submitting report:', error);
-        throw error;
+        throw new Error(error.message || 'Failed to submit report');
     }
 }
 
-// Event listener for DOM content load
-document.addEventListener('DOMContentLoaded', () => {
-    const collegeCodeForm = document.getElementById('collegeCodeForm');
-    const incidentCategorySelect = document.getElementById('incidentCategory');
-    document.addEventListener('DOMContentLoaded', () => {
-        const container = document.querySelector('.container');
-        container.classList.add('flip-animation');
-    });
-
-    // Handle college code submission
-    if (collegeCodeForm) {
-        collegeCodeForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            submitCode();
+// Load reports with filters
+async function loadReports() {
+    const status = document.getElementById('filterStatus').value;
+    const category = document.getElementById('filterCategory').value;
+    const sortBy = document.getElementById('sortBy').value;
+    
+    try {
+        const response = await fetch(`${BACKEND_URL}/admin/reports?status=${status}&category=${category}&sortBy=${sortBy}`);
+        const { reports } = await response.json();
+        
+        const tableBody = document.getElementById('reportsBody');
+        tableBody.innerHTML = '';
+        
+        reports.forEach(report => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${report._id}</td>
+                <td>${report.incidentCategory}</td>
+                <td>${report.incidentType}</td>
+                <td>${report.description}</td>
+                <td>${new Date(report.date).toLocaleString()}</td>
+                <td>
+                    <select onchange="updateStatus('${report._id}', this.value)">
+                        <option ${report.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                        <option ${report.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                        <option ${report.status === 'Resolved' ? 'selected' : ''}>Resolved</option>
+                    </select>
+                </td>
+                <td><button onclick="deleteReport('${report._id}')">Delete</button></td>
+            `;
+            tableBody.appendChild(row);
         });
+    } catch (error) {
+        alert("Failed to load reports");
     }
+}
 
-    // Handle category selection and populate types
-    if (incidentCategorySelect) {
-        incidentCategorySelect.addEventListener('change', populateIncidentTypes);
-        populateIncidentTypes(); // Populate on load
+// Update report status
+async function updateStatus(reportId, status) {
+    try {
+        await fetch(`${BACKEND_URL}/admin/reports/${reportId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status })
+        });
+    } catch (error) {
+        alert("Failed to update status");
     }
+}
 
-    // Handle report form submission
-    const reportForm = document.getElementById('reportForm');
-    if (reportForm) {
-        reportForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+// Delete report (optional)
+async function deleteReport(reportId) {
+    if (confirm("Are you sure?")) {
+        try {
+            await fetch(`${BACKEND_URL}/admin/reports/${reportId}`, { method: 'DELETE' });
+            loadReports(); // Refresh the list
+        } catch (error) {
+            alert("Failed to delete report");
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const incidentForm = document.getElementById('incidentForm');
+    const incidentCategory = document.getElementById('incidentCategory');
+
+     populateIncidentTypes();
+
+    if (incidentForm) {
+        incidentForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            toggleSpinner(true);
+
             try {
-                toggleSpinner(true);
+                const formData = {
+                    collegeCode: COLLEGE_CODE,
+                    incidentCategory: document.getElementById('incidentCategory').value,
+                    incidentType: document.getElementById('incidentType').value,
+                    description: document.getElementById('description').value,
+                    date: new Date().toISOString()  // This will capture the exact moment of submission
+                };
 
-                // Collect form data as FormData
-                const formData = new FormData(reportForm);
-
-                // Append additional fields like collegeCode and timestamp
-                const collegeCode = localStorage.getItem('collegeCode');
-                if (!collegeCode) {
-                    throw new Error('College code not found');
-                }
-                formData.append('collegeCode', collegeCode);
-                formData.append('timestamp', new Date().toISOString());
-
-                // If an image is selected, it will be automatically included in FormData
-                const imageFile = document.getElementById('image').files[0];
-                if (imageFile) {
-                    formData.append('image', imageFile); // The key should match your backend field name
+                // Validate form data before submission
+                if (!formData.incidentCategory || !formData.incidentType || !formData.description) {
+                    throw new Error('Please fill out all required fields.');
                 }
 
-                // Submit the report as FormData
-                const result = await submitReport(formData);
+                const response = await submitReport(formData);
+                console.log('Report submitted successfully:', response);
 
-                // Notify the user with the returned data
-                alert(`New Report Details:\n\nID: ${result.id}\nCollege Code: ${result.collegeCode}\nCategory: ${result.incidentCategory}\nType: ${result.incidentType}\nDescription: ${result.description}\nDate: ${new Date(result.timestamp).toLocaleString()}\nEnvironment: production`);
-
-                // Reset the form and repopulate incident types
-                reportForm.reset();
-                populateIncidentTypes(); // Repopulate the categories if needed
+                incidentForm.reset();
+                alert('Your incident report has been submitted successfully!');
             } catch (error) {
                 console.error('Error:', error);
-                alert(`Failed to submit report: ${error.message}`);
+                alert('Failed to submit the report. Please try again.');
             } finally {
                 toggleSpinner(false);
             }
         });
+    }
+
+    if (incidentCategory) {
+        incidentCategory.addEventListener('change', populateIncidentTypes);
     }
 });
 

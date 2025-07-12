@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin-style.css">
 </head>
 <body>
-    <div class="container">
+      <div class="dashboard-container"> 
         <h1>Incident Reports Dashboard</h1>
         
         <!-- Filters -->
@@ -34,6 +34,7 @@
             <button onclick="loadReports()">Apply Filters</button>
         </div>
         
+        <div class="table-container">
         <!-- Reports Table -->
         <table id="reportsTable">
             <thead>
@@ -49,6 +50,7 @@
             </thead>
             <tbody id="reportsBody"></tbody>
         </table>
+        </div>
     </div>
     
     <script src="script.js"></script>

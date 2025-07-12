@@ -294,11 +294,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const formData = {
-                    collegeCode: COLLEGE_CODE,
-                    incidentCategory: document.getElementById('incidentCategory').value,
-                    incidentType: document.getElementById('incidentType').value,
-                    description: document.getElementById('description').value,
-                    date: new Date().toISOString()  // This will capture the exact moment of submission
+                collegeCode: COLLEGE_CODE,
+                incidentCategory: document.getElementById('incidentCategory').value,
+                incidentType: document.getElementById('incidentType').value,
+                description: document.getElementById('description').value,
+                date: new Date().toISOString(),
+                userEmail: document.getElementById('userEmail').value || null // Add email if provided
                 };
 
                 // Validate form data before submission

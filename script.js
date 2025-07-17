@@ -224,9 +224,16 @@ async function loadReports() {
     const status = document.getElementById('filterStatus').value;
     const category = document.getElementById('filterCategory').value;
     const sortBy = document.getElementById('sortBy').value;
+    const ADMIN_KEY = "temp123"; // Match your server's key
+    
     
     try {
-        const response = await fetch(`${BACKEND_URL}/admin/reports?status=${status}&category=${category}&sortBy=${sortBy}`);
+        const response = await fetch(`${BACKEND_URL}/admin/reports?status=${status}&category=${category}&sortBy=${sortBy}&key=${ADMIN_KEY}`,
+            {
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include' // If using cookies
+            }
+        );
         const { reports } = await response.json();
         
         const tableBody = document.getElementById('reportsBody');
@@ -325,7 +332,6 @@ document.addEventListener('DOMContentLoaded', () => {
         incidentCategory.addEventListener('change', populateIncidentTypes);
     }
 });
-
 
 
 
